@@ -52,6 +52,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run test:unit
+
   security:
     name: Security
     runs-on: ubuntu-latest
@@ -77,6 +78,7 @@ jobs:
 
       - name: Secrets in the repository
         run: gitleaks detect --source . --config .gitleaks.toml --redact --verbose --log-opts="--first-parent HEAD"
+
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -88,6 +90,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+
       - name: Upload build
         uses: actions/upload-artifact@v4
         with:
@@ -124,11 +127,6 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - name: Download build
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
 
       - name: Resolve Playwright version
         id: pw
@@ -144,7 +142,13 @@ jobs:
       - name: Install Playwright browsers
         if: steps.pw-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium
-     
+
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
       - name: UI tests
         run: npx playwright test --project=ui-chromium ${{ env.GREP }}
         env:
