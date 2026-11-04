@@ -80,6 +80,12 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
 
   test-api:
     name: API tests
@@ -92,6 +98,11 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
       - run: npm run test:api
 
   test-ui:
@@ -105,6 +116,11 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
 
       - name: Resolve Playwright version
         id: pw
