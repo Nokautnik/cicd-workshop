@@ -1,5 +1,5 @@
 # Szybki feedback w CI/CD — repozytorium warsztatowe
-t
+Drobnapoprawkadokumentacji
 Aplikacja demonstracyjna i wyjściowy pipeline dla warsztatu *„Szybki feedback w CI/CD:
 jak zaprojektować pipeline, który buduje, testuje i wdraża bez utraty jakości”*.
 
